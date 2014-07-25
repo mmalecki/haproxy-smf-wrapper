@@ -40,7 +40,7 @@ static void locate_haproxy(char *buffer, size_t buffer_size)
 		end = strrchr(buffer, '/');
 
 	if (end == NULL) {
-		strncpy(buffer, "/usr/sbin/haproxy", buffer_size);
+		strncpy(buffer, "/opt/local/sbin/haproxy", buffer_size);
 		return;
 	}
 	end[1] = '\0';
