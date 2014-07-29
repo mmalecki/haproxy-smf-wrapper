@@ -32,25 +32,8 @@ static char *pid_file = "/run/haproxy.pid";
 static int wrapper_argc;
 static char **wrapper_argv;
 
-static void locate_haproxy(char *buffer, size_t buffer_size)
-{
-	char *end = NULL;
-
-	if (readlink("/proc/self/exe", buffer, buffer_size) > 0)
-		end = strrchr(buffer, '/');
-
-	if (end == NULL) {
-		strncpy(buffer, "/opt/local/sbin/haproxy", buffer_size);
-		return;
-	}
-	end[1] = '\0';
-	strncpy(end + 1, "haproxy", buffer + buffer_size - (end + 1));
-	buffer[buffer_size - 1] = '\0';
-}
-
 static void spawn_haproxy(char **pid_strv, int nb_pid)
 {
-	char haproxy_bin[512];
 	pid_t pid;
 	int main_argc;
 	char **main_argv;
@@ -64,8 +47,6 @@ static void spawn_haproxy(char **pid_strv, int nb_pid)
 		char **argv = calloc(4 + main_argc + nb_pid + 1, sizeof(char *));
 		int i;
 		int argno = 0;
-		locate_haproxy(haproxy_bin, 512);
-		argv[argno++] = haproxy_bin;
 		for (i = 0; i < main_argc; ++i)
 			argv[argno++] = main_argv[i];
 		argv[argno++] = "-Ds";
