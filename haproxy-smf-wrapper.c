@@ -28,7 +28,7 @@
 #define SD_DEBUG "<7>"
 #define SD_NOTICE "<5>"
 
-static char *pid_file = "/run/haproxy.pid";
+static char *pid_file = "/tmp/haproxy.pid";
 static int wrapper_argc;
 static char **wrapper_argv;
 
